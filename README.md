@@ -1,31 +1,35 @@
-# just-liz.fr
+# grumpy-coffee.fr
 
-Site statique hébergé sur GitHub Pages, servant de hub pour les pages liées à mes projets (politiques de confidentialité, CGU, etc.).
+C'est mon petit hub perso, hébergé gratuitement sur GitHub Pages. Ça me sert à regrouper les pages liées à mes projets (politique de confidentialité, CGU...) sans dépendre de Render qui met tout en veille.
 
-## Structure
+## Comment c'est organisé
 
 ```
 .
-├── index.html          → page d'accueil (hub avec liens)
+├── index.html                    → ma page d'accueil (juste une liste de liens)
 ├── vex/
-│   └── index.html      → politique de confidentialité du bot vex
-└── CNAME                → domaine personnalisé (just-liz.fr)
+│   ├── index.html                → politique de confidentialité de vex
+│   └── conditions/
+│       └── index.html            → CGU de vex
+└── CNAME                          → contient "grumpy-coffee.fr", à ne pas supprimer
 ```
 
-Pour ajouter un nouveau projet : créer un dossier `/nom-du-projet/index.html`, puis ajouter le lien dans `index.html` (page d'accueil).
+Si j'ajoute un nouveau projet un jour, je crée juste un nouveau dossier `/nom-du-projet/index.html` et j'ajoute le lien sur la page d'accueil.
 
-## Déploiement — GitHub Pages
+## Comment j'ai déployé ça
 
-1. Repo public sur GitHub (nécessaire pour Pages en gratuit).
-2. Push ces fichiers sur la branche `main`.
+1. Repo public sur GitHub (obligatoire pour Pages en gratuit, sinon Pages reste grisé même si le repo perso est privé).
+2. J'ai push/uploadé les fichiers sur `main`.
 3. Dans **Settings → Pages** :
-   - Source : `main` / dossier `/ (root)`
-   - Custom domain : `just-liz.fr`
-   - Cocher **Enforce HTTPS** une fois le certificat généré (peut prendre quelques heures).
+   - Source : `main` / `/ (root)`
+   - Custom domain : `grumpy-coffee.fr`
+   - Une fois le certificat généré (ça a pris un peu de temps), j'ai coché **Enforce HTTPS**.
 
-## Configuration DNS (chez le registrar du domaine)
+## Config DNS chez Ionos
 
-**Enregistrements A** (domaine racine `just-liz.fr`) → pointer vers les IP GitHub Pages :
+Sur `grumpy-coffee.fr`, j'ai :
+
+**4 enregistrements A** sur `@` :
 ```
 185.199.108.153
 185.199.109.153
@@ -33,20 +37,21 @@ Pour ajouter un nouveau projet : créer un dossier `/nom-du-projet/index.html`, 
 185.199.111.153
 ```
 
-**Enregistrement CNAME** (sous-domaine `www`) :
+**1 CNAME** sur `www` :
 ```
-www → tonpseudo.github.io
+www → lizhbt.github.io
 ```
 
-Le fichier `CNAME` à la racine du repo (déjà présent) confirme à GitHub Pages quel domaine servir — ne pas le supprimer, sinon le domaine perso se désactive au prochain déploiement.
+Ça a mis un moment à se propager (le check GitHub "DNS check unsuccessful" est resté un bail avant de passer au vert), mais c'est normal, fallait juste attendre.
 
-## Commandes utiles
+## Résultat
 
-```bash
-git init
-git add .
-git commit -m "Initial commit — hub just-liz.fr"
-git branch -M main
-git remote add origin https://github.com/TON_PSEUDO/NOM_DU_REPO.git
-git push -u origin main
-```
+- `https://grumpy-coffee.fr` → mon hub
+- `https://grumpy-coffee.fr/vex/` → privacy policy de vex, mise dans le Developer Portal
+- `https://grumpy-coffee.fr/vex/conditions/` → CGU de vex
+
+## À ne pas oublier
+
+Je garde bien ce repo séparé du code du bot vex lui-même (qui reste privé, avec les tokens et tout). Ici, il n'y a que du HTML statique, donc aucun souci que ce soit public.
+
+— Liz
