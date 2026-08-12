@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>just-liz.fr</title>
+<title>Politique de confidentialité — vex</title>
 <style>
   :root {
     --bg: #ffffff;
@@ -21,48 +21,122 @@
     line-height: 1.65;
   }
   .wrap {
-    max-width: 640px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 80px 24px;
+    padding: 64px 24px 100px;
+  }
+  header {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 20px;
+    margin-bottom: 36px;
   }
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 600;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
+    letter-spacing: 0.2px;
   }
-  .sub {
+  .meta {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     color: var(--muted);
-    font-size: 0.9rem;
-    margin-bottom: 48px;
+    font-size: 0.85rem;
   }
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  li {
-    border-top: 1px solid var(--border);
-  }
-  li:last-child { border-bottom: 1px solid var(--border); }
-  a {
-    display: block;
-    padding: 18px 4px;
+  h2 {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 1rem;
-    color: var(--text);
-    text-decoration: none;
+    font-size: 1.02rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 38px;
+    margin-bottom: 12px;
+    color: var(--accent);
   }
-  a:hover { color: var(--accent); text-decoration: underline; }
+  p, li {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 0.96rem;
+    color: var(--text);
+  }
+  ul { padding-left: 20px; margin: 10px 0; }
+  li { margin-bottom: 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    background: #f7f7f8;
+    font-weight: 700;
+    width: 30%;
+  }
+  a { color: var(--accent); text-decoration: underline; }
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>just-liz.fr</h1>
-  <div class="sub">Pages liées à mes projets</div>
+  <header>
+    <h1>Politique de confidentialité</h1>
+    <div class="meta">Application Discord « vex » &nbsp;·&nbsp; Dernière mise à jour : 12 août 2026</div>
+  </header>
+
+  <p>La présente politique décrit les données collectées par le bot Discord vex, la finalité de leur traitement, ainsi que les droits dont dispose tout utilisateur concernant ces données. L'utilisation du bot sur un serveur Discord implique l'acceptation des termes ci-dessous.</p>
+
+  <h2>1. Données collectées</h2>
+  <table>
+    <tr><th>Type de donnée</th><td>Identifiant Discord de l'utilisateur et du serveur</td></tr>
+    <tr><th>Finalité</th><td>Association des données de jeu (inventaire, progression) au compte de l'utilisateur</td></tr>
+  </table>
+  <table>
+    <tr><th>Type de donnée</th><td>Contenu des messages</td></tr>
+    <tr><th>Finalité</th><td>Détection des commandes et interactions déclenchant les fonctionnalités du bot</td></tr>
+  </table>
+  <table>
+    <tr><th>Type de donnée</th><td>Statut de présence (en ligne, activité en cours)</td></tr>
+    <tr><th>Finalité</th><td>Fonctionnalités liées à l'activité des membres, lorsqu'applicable</td></tr>
+  </table>
+  <table>
+    <tr><th>Type de donnée</th><td>Informations relatives aux membres (pseudonyme, rôles)</td></tr>
+    <tr><th>Finalité</th><td>Gestion des permissions et affichage des profils au sein du bot</td></tr>
+  </table>
+  <table>
+    <tr><th>Type de donnée</th><td>Données de progression (inventaire, monnaie virtuelle, niveau)</td></tr>
+    <tr><th>Finalité</th><td>Fonctionnement des systèmes de jeu propres au bot</td></tr>
+  </table>
+
+  <h2>2. Utilisation des données</h2>
+  <p>Les données mentionnées ci-dessus sont utilisées exclusivement pour assurer le fonctionnement du bot : réponses automatiques, système d'inventaire et d'économie virtuelle, progression, et gestion des permissions liées aux rôles Discord. Aucune donnée n'est cédée, vendue ou exploitée à des fins publicitaires ou commerciales par des tiers.</p>
+
+  <h2>3. Conservation et sécurité</h2>
+  <p>Les données sont stockées dans une base de données propre au bot, dont l'accès est limité à son développeur. Elles sont conservées pour la durée d'utilisation du bot par l'utilisateur ou du serveur concerné, sauf demande de suppression.</p>
+
+  <h2>4. Droits de l'utilisateur</h2>
   <ul>
-    <li><a href="/vex/">vex — Politique de confidentialité</a></li>
+    <li>Demander la suppression de l'ensemble des données associées à son compte (inventaire, progression, identifiants).</li>
+    <li>Demander communication des données détenues à son sujet.</li>
   </ul>
+  <p>Ces demandes peuvent être adressées directement au développeur du bot via Discord.</p>
+
+  <h2>5. Modifications</h2>
+  <p>Cette politique peut être amenée à évoluer en fonction des fonctionnalités ajoutées au bot. La date de dernière mise à jour figure en en-tête du présent document.</p>
+
+  <footer>
+    vex — Application Discord
+  </footer>
 </div>
 </body>
 </html>
