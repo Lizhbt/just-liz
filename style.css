@@ -69,6 +69,41 @@ h1 {
 }
 .links a:hover { color: var(--accent); text-decoration: underline; }
 
+/* Présentation d'un projet (page vex) */
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 56px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.features li {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: var(--sans);
+}
+.features strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.features span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.section {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
 .back {
   display: inline-block;
   margin-top: 40px;
