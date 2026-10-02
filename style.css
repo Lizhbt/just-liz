@@ -1,0 +1,179 @@
+/* Styles communs à toutes les pages du site */
+
+:root {
+  --bg: #ffffff;
+  --text: #1c1c1e;
+  --muted: #5b5b60;
+  --border: #e2e2e5;
+  --accent: #2f2f33;
+  --th-bg: #f7f7f8;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Mode sombre automatique si l'appareil est en mode sombre */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161618;
+    --text: #ececef;
+    --muted: #a0a0a8;
+    --border: #2e2e33;
+    --accent: #d8d8dc;
+    --th-bg: #202024;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.sub {
+  font-family: var(--sans);
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 48px;
+}
+
+/* Liste de liens (accueil, page vex) */
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.links li { border-top: 1px solid var(--border); }
+.links li:last-child { border-bottom: 1px solid var(--border); }
+.links a {
+  display: block;
+  padding: 18px 4px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.links a:hover { color: var(--accent); text-decoration: underline; }
+
+/* Présentation d'un projet (page vex) */
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 56px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.features li {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: var(--sans);
+}
+.features strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.features span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.section {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 40px;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.back:hover { color: var(--accent); }
+
+/* Pages légales (politique, conditions) */
+.legal .wrap {
+  max-width: 720px;
+  padding: 64px 24px 100px;
+}
+.legal header {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 20px;
+  margin-bottom: 36px;
+}
+.legal h1 {
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+.meta {
+  font-family: var(--sans);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.meta + .meta { margin-top: 10px; }
+.legal h2 {
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-top: 38px;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+.legal p, .legal li {
+  font-family: var(--sans);
+  font-size: 0.96rem;
+}
+.legal ul { padding-left: 20px; margin: 10px 0; }
+.legal li { margin-bottom: 6px; }
+.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 20px;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+.legal th, .legal td {
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+.legal th {
+  background: var(--th-bg);
+  font-weight: 700;
+  width: 30%;
+}
+.legal a { color: var(--accent); text-decoration: underline; }
+.legal footer {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
