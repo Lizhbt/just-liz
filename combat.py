@@ -78,13 +78,17 @@ class WaveCombat:
         self.start_wave()
 
     def generate_enemies(self):
+        slime_ids = list(SLIMES.keys())
+        zone_slimes = [s for s in slime_ids if SLIMES[s].get("zone") == self.zone]
+
         enemies = []
-        for i in range(self.zone):
-            if i < self.zone - 1:
-                enemies.append(f"slime_{(self.zone-1)*2 + (i%2) + 1:03d}")
+        for i in range(min(self.zone, 3)):
+            if zone_slimes:
+                enemies.append(random.choice(zone_slimes))
             else:
-                enemies.append(f"slime_{self.zone*2 - 1:03d}")
-        return [e for e in enemies if e in SLIMES]
+                enemies.append(random.choice(slime_ids))
+
+        return enemies
 
     def start_wave(self):
         self.wave += 1

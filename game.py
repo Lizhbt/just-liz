@@ -133,15 +133,19 @@ class VexGame:
                 self.state = GameState.GAME_OVER
                 return
 
+            zone_difficulty = min(self.survival_wave // 2 + 1, 5)
             self.wave_combat = WaveCombat(
                 active_slime,
-                min(self.survival_wave // 3 + 1, 5),
+                zone_difficulty,
                 difficulty=self.survival_difficulty
             )
 
         status = self.wave_combat.get_status()
         if status:
-            self.ui.add_line(f"SURVIE - Vague {self.survival_wave}")
+            self.ui.draw_player_status(self.player)
+            self.ui.add_line(f"*** SURVIE ***")
+            self.ui.add_line(f"Vague: {self.survival_wave}")
+            self.ui.add_line(f"Diff: {self.survival_difficulty:.1f}x")
             self.ui.add_separator()
             self.ui.draw_combat_status(status)
 
@@ -152,7 +156,7 @@ class VexGame:
                     self.survival_difficulty += SURVIVAL_DIFFICULTY_INCREMENT
                     self.wave_combat = None
                 else:
-                    self.ui.add_line("Defaite!")
+                    self.ui.add_line("Vague perdue!")
                 self.ui.add_line("(S)uivant (Q)uitter")
 
     def process_input(self, choice):
@@ -229,15 +233,16 @@ class VexGame:
                 self.state = GameState.MENU
 
         elif self.state == GameState.SURVIVAL_ARENA:
-            if not self.wave_combat.finished:
-                if choice == "A":
-                    self.wave_combat.player_attack()
-                elif choice == "F":
-                    self.wave_combat.finished = True
+            if not self.wave_combat or not self.wave_combat.finished:
+                if self.wave_combat:
+                    if choice == "A":
+                        self.wave_combat.player_attack()
+                    elif choice == "F":
+                        self.wave_combat.finished = True
             else:
                 if choice == "S":
                     self.apply_combat_rewards()
-                    if self.wave_combat.player_won:
+                    if self.wave_combat.current_combat and self.wave_combat.current_combat.player_won:
                         self.wave_combat = None
                     else:
                         self.state = GameState.GAME_OVER
@@ -258,8 +263,13 @@ class VexGame:
     def start_survival(self):
         self.mode = GameMode.SURVIVAL
         self.player = Player("Survivant")
-        self.survival_wave = 0
-        self.survival_difficulty = SURVIVAL_START_DIFFICULTY
+        self.survival_wave = 1
+        self.survival_difficulty = 0.8
+
+        from slimes import SLIMES
+        starter_slime = SLIMES["slime_003"].copy()
+        self.player.add_slime(starter_slime)
+
         self.state = GameState.SURVIVAL_ARENA
 
     def apply_hunt_rewards(self):
