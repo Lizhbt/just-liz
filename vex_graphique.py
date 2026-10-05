@@ -32,21 +32,54 @@ class GameState(Enum):
     VICTORY = 7
 
 class Slime:
-    def __init__(self, emoji, nom, hp, atk, def_, xp, zone):
-        self.emoji = emoji
+    def __init__(self, nom, hp, atk, def_, xp, zone, color_rgb, draw_func):
         self.nom = nom
         self.hp = hp
         self.atk = atk
         self.def_ = def_
         self.xp = xp
         self.zone = zone
+        self.color = color_rgb
+        self.draw_func = draw_func
+
+def draw_slime_gelee(x, y, size=60):
+    pygame.draw.ellipse(screen, (0, 200, 0), (x-size//2, y-size//3, size, size//2))
+    pygame.draw.ellipse(screen, (100, 255, 100), (x-size//2+4, y-size//3+4, size-8, size//2-8))
+    pygame.draw.circle(screen, BLACK, (x-size//4, y-size//4), 4)
+    pygame.draw.circle(screen, BLACK, (x+size//4, y-size//4), 4)
+
+def draw_slime_essence(x, y, size=60):
+    points = [(x, y-size//2), (x+size//2, y), (x+size//4, y+size//2), (x-size//4, y+size//2), (x-size//2, y)]
+    pygame.draw.polygon(screen, (200, 0, 255), points)
+    pygame.draw.polygon(screen, (220, 100, 255), [(x, y-size//3), (x+size//3, y), (x, y+size//3), (x-size//3, y)])
+    pygame.draw.circle(screen, WHITE, (x-size//5, y-size//6), 2)
+    pygame.draw.circle(screen, WHITE, (x+size//5, y-size//6), 2)
+
+def draw_slime_cristal(x, y, size=60):
+    pygame.draw.polygon(screen, (255, 200, 0), [(x, y-size//2), (x+size//2, y-size//4), (x+size//3, y+size//2), (x-size//3, y+size//2), (x-size//2, y-size//4)])
+    pygame.draw.polygon(screen, (255, 255, 100), [(x, y-size//3), (x+size//3, y), (x+size//4, y+size//3), (x-size//4, y+size//3), (x-size//3, y)])
+    pygame.draw.circle(screen, WHITE, (x, y-size//6), 2)
+
+def draw_slime_masse(x, y, size=60):
+    pygame.draw.ellipse(screen, (255, 50, 100), (x-size//2, y-size//3, size, size))
+    pygame.draw.ellipse(screen, (255, 100, 150), (x-size//2+3, y-size//3+3, size-6, size-6))
+    pygame.draw.circle(screen, BLACK, (x-size//4, y-size//4), 5)
+    pygame.draw.circle(screen, BLACK, (x+size//4, y-size//4), 5)
+
+def draw_slime_abysse(x, y, size=60):
+    pygame.draw.circle(screen, (30, 30, 30), (x, y), size//2)
+    pygame.draw.circle(screen, (50, 50, 50), (x, y), size//2-3)
+    pygame.draw.circle(screen, (255, 0, 255), (x-size//4, y-size//4), 5)
+    pygame.draw.circle(screen, (255, 0, 255), (x+size//4, y-size//4), 5)
+    pygame.draw.circle(screen, (255, 255, 0), (x-size//4, y-size//4), 2)
+    pygame.draw.circle(screen, (255, 255, 0), (x+size//4, y-size//4), 2)
 
 SLIMES = {
-    1: Slime("🟢", "Gelée", 20, 10, 5, 10, 1),
-    2: Slime("🟣", "Essence", 30, 15, 8, 25, 2),
-    3: Slime("🟡", "Cristal", 40, 20, 12, 50, 3),
-    4: Slime("🔴", "Masse", 60, 30, 15, 100, 4),
-    5: Slime("🖤", "Abysse", 100, 50, 25, 200, 5),
+    1: Slime("Gelée", 20, 10, 5, 10, 1, (0, 200, 0), draw_slime_gelee),
+    2: Slime("Essence", 30, 15, 8, 25, 2, (200, 0, 255), draw_slime_essence),
+    3: Slime("Cristal", 40, 20, 12, 50, 3, (255, 200, 0), draw_slime_cristal),
+    4: Slime("Masse", 60, 30, 15, 100, 4, (255, 50, 100), draw_slime_masse),
+    5: Slime("Abysse", 100, 50, 25, 200, 5, (30, 30, 30), draw_slime_abysse),
 }
 
 def draw_text(text, x, y, size=16, color=WHITE):
@@ -117,15 +150,13 @@ class Game:
 
         draw_text(f"ZONE {self.zone}", 10, 20, 24, GREEN)
         draw_text(f"Level {self.level}  XP {self.xp}/{self.xp_needed}", 10, 50, 14, WHITE)
-        draw_text(f"Équipe: {self.player_slime.emoji} {self.player_slime.nom}", 10, 70, 12, WHITE)
+        draw_text(f"Équipe: {self.player_slime.nom}", 10, 70, 12, WHITE)
 
         # Affiche le slime de la zone
         slime = SLIMES[self.zone]
-        font = pygame.font.Font(None, 80)
-        txt = font.render(slime.emoji, True, WHITE)
-        screen.blit(txt, (SCREEN_WIDTH//2 - 40, 100))
+        slime.draw_func(SCREEN_WIDTH//2, 120, 70)
 
-        draw_text(slime.nom, SCREEN_WIDTH//2 - 40, 170, 16, WHITE)
+        draw_text(slime.nom, SCREEN_WIDTH//2 - 30, 170, 16, WHITE)
 
         # Options
         draw_text("(C) Combat  (H) Chasse  (P) Pokedex", 20, 235, 11, YELLOW)
@@ -135,10 +166,8 @@ class Game:
 
         draw_text("CHASSE", 10, 10, 20, GREEN)
 
-        # Grand emoji du slime
-        font = pygame.font.Font(None, 100)
-        txt = font.render(self.hunt_enemy.emoji, True, WHITE)
-        screen.blit(txt, (SCREEN_WIDTH//2 - 50, 50))
+        # Sprite du slime
+        self.hunt_enemy.draw_func(SCREEN_WIDTH//2, 80, 80)
 
         draw_text(self.hunt_enemy.nom, SCREEN_WIDTH//2 - 30, 160, 18, WHITE)
 
@@ -158,18 +187,15 @@ class Game:
     def draw_combat(self):
         screen.fill(BLACK)
 
-        # Infos joueur (bas)
-        draw_text(f"{self.player_slime.nom}", 10, 200, 16, WHITE)
-        draw_hp_bar(10, 220, self.player_hp, self.player_slime.hp, 150)
-
         # Ennemi (haut)
-        draw_text(f"{self.combat_enemy.nom}", 10, 10, 16, WHITE)
-        draw_hp_bar(10, 30, self.combat_enemy_hp, self.combat_enemy.hp, 150)
+        draw_text(f"{self.combat_enemy.nom}", 10, 10, 14, WHITE)
+        draw_hp_bar(10, 30, self.combat_enemy_hp, self.combat_enemy.hp, 120)
+        self.combat_enemy.draw_func(SCREEN_WIDTH - 50, 90, 60)
 
-        # Gros emoji ennemi
-        font = pygame.font.Font(None, 70)
-        txt = font.render(self.combat_enemy.emoji, True, WHITE)
-        screen.blit(txt, (SCREEN_WIDTH - 80, 70))
+        # Infos joueur (bas)
+        draw_text(f"{self.player_slime.nom}", 10, 170, 14, WHITE)
+        draw_hp_bar(10, 190, self.player_hp, self.player_slime.hp, 120)
+        self.player_slime.draw_func(SCREEN_WIDTH - 50, 230, 50)
 
         # Actions
         draw_button(10, 240, "ATQ", 50, 25, True)
@@ -181,28 +207,22 @@ class Game:
         draw_text("POKEDEX", 10, 10, 20, GREEN)
         draw_text(f"Capturés: {len(self.roster)-1}/{5}", 10, 40, 14, WHITE)
 
-        # Affiche 4 slimes par écran en grille
-        for i, (id_, slime) in enumerate(SLIMES.items()):
-            if i >= 4:
+        # Affiche slimes en grille
+        positions = [(50, 85), (220, 85), (50, 165), (220, 165)]
+        for idx, (pos_x, pos_y) in enumerate(positions, 1):
+            if idx > 4:
                 break
-
-            col = i % 2
-            row = i // 2
-            x = 50 + col * 150
-            y = 80 + row * 80
+            slime = SLIMES[idx]
 
             # Boite
-            draw_box(x-30, y-30, 110, 70, DARK_BLUE, 2)
+            draw_box(pos_x-35, pos_y-40, 70, 70, DARK_BLUE, 2)
 
-            # Emoji
-            font = pygame.font.Font(None, 50)
-            if id_ in self.discovered or slime in self.roster:
-                txt = font.render(slime.emoji, True, WHITE)
-                screen.blit(txt, (x-15, y-25))
-                draw_text(slime.nom, x-25, y+15, 11, WHITE)
+            # Sprite ou ?
+            if idx in self.discovered or slime in self.roster:
+                slime.draw_func(pos_x, pos_y-10, 40)
+                draw_text(slime.nom, pos_x-25, pos_y+25, 10, WHITE)
             else:
-                txt = font.render("?", True, RED)
-                screen.blit(txt, (x-5, y-25))
+                draw_text("?", pos_x-5, pos_y-15, 24, RED)
 
         draw_text("(R) Retour", 10, 250, 11, YELLOW)
 
